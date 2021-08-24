@@ -19,20 +19,16 @@ class PermissionSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Permission::create(['name' => 'edit articles']);
-        Permission::create(['name' => 'delete articles']);
-        Permission::create(['name' => 'publish articles']);
-        Permission::create(['name' => 'unpublish articles']);
 
-        $role1 = Role::create(['name' => 'writer']);
-        $role1->givePermissionTo('edit articles');
-        $role1->givePermissionTo('delete articles');
+        Permission::create(['name' => 'publish state']);
+        Permission::create(['name' => 'unpublish state']);
 
-        $role2 = Role::create(['name' => 'admin']);
-        $role2->givePermissionTo('publish articles');
-        $role2->givePermissionTo('unpublish articles');
+        $role1 = Role::create(['name' => 'admin']);
+        $role2 = Role::create(['name' => 'slave_user']);
+        $role2->givePermissionTo('publish state');
+        $role2->givePermissionTo('unpublish state');
 
-        $role3 = Role::create(['name' => 'Super-Admin']);
+        $role3 = Role::create(['name' => 'master-user']);
         $user = \App\Models\User::factory()->create([
             'name' => 'Example User',
             'email' => 'test@example.com',
