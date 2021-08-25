@@ -7,7 +7,7 @@
                 <span class="text-white text-2xl mx-2 font-semibold">{{config('app.name')}}</span>
             </div>
         </div>
-        @include('components.nav-profile')
+        @include('profile.nav-profile')
     <nav class="mt-10">
         @hasanyrole('slave_user|master_user')
         <div x-data="{ open: false }">
@@ -27,11 +27,10 @@
             </button>
 
             <div x-show="open" class="bg-gray-700">
-                <a href="{{route('dashboard')}}" class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Месячные </a>
-                <a href="{{route('dashboard')}}"  class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" href="#">Квартальные</a>
+                <a href="{{route('monthly')}}" class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Месячные </a>
+                <a href="{{route('quarterly')}}"  class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" href="#">Квартальные</a>
             </div>
         </div>
-
         <div x-data="{ open: false }">
             <button @click="open = !open" class="w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-700 hover:text-gray-100 focus:outline-none">
                         <span class="flex items-center">
