@@ -1,4 +1,4 @@
-<div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200">
+<div x-data="{ sidebarOpen: true }" class="flex h-screen bg-gray-200">
     <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform bg-gray-900 overflow-y-auto lg:translate-x-0 lg:static lg:inset-0">
         <div class="flex items-center justify-center mt-8">
             <div class="flex items-center">
@@ -81,8 +81,18 @@
                 <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" href="#">Субъекты страхового дела</a>
             </div>
         </div>
+        <a href="{{route('register')}}"  class="w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-700 hover:text-gray-100 focus:outline-none">
+                        <span class="flex items-center">
+<svg class="h-8 w-8 text-white"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+</svg>
+
+            <span class="mx-3">Регистрация пользователей</span>
+                        </span>
+
+        </a>
 
 
         @endhasrole
     </nav>
-    </div>
+</div>

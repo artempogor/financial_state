@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Profile\ProfileController;
 use \Illuminate\Auth\Middleware\Authorize;
@@ -35,6 +36,13 @@ Route::get('/quartely', function () {
 Route::get('/letters', function () {
     return view('user_tabs.letters.accompanying_later');
 })->middleware(['auth'])->name('accompanying_later');
+});
+
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('/register', [RegisteredUserController::class, 'create'])
+        ->name('register');
+
+    Route::post('/register', [RegisteredUserController::class, 'store']);
 });
 
 require __DIR__.'/auth.php';

@@ -30,6 +30,7 @@
                                 type="password"
                                 name="password"
                                 required autocomplete="current-password" />
+                <label><input type="checkbox" class="password-checkbox"> Показать пароль</label>
             </div>
 
             <!-- Remember Me -->

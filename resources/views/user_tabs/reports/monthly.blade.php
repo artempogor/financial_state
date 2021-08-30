@@ -5,14 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-    <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <!-- Scripts -->
-
     <script src="{{ asset('js/app.js') }}" defer></script>
-
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </head>
 <body class="font-sans antialiased">
@@ -37,12 +32,21 @@
                         </ul>
                         <div class="  bg-white p-16 text-center mx-auto border">
                             <div x-show="activeTab===0">
-                                wfwf
+                                <div id="example1" class="hot"></div>
                             </div>
                             <div x-show="activeTab===1">Content 2</div>
                         </div>
+
                     </div>
-                <div id="example">cscv</div>
+                <div class="flex justify-left controls">
+                    <button id="load" class="button button--primary button--blue">Load data</button>&nbsp;
+                    <button id="save" class="button button--primary button--blue">Save data</button>
+                    <label>
+                        <input type="checkbox" name="autosave" id="autosave"/>
+                        Autosave
+                    </label>
+                </div>
+                <pre id="example1console" class="flex justify-left console">Click "Load" to load data from server</pre>
 
             </div>
         </div>
@@ -50,5 +54,15 @@
 </div>
 
 </body>
-
+<script>
+    function setup() {
+        return {
+            activeTab: 0,
+            tabs: [
+                "Форма 0101",
+                "Форма 0102",
+            ]
+        };
+    };
+</script>
 </html>
