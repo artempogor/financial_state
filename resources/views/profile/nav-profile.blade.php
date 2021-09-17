@@ -10,7 +10,7 @@
     </button>
     <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-5"
          style="display: none;"></div>
-    <span  @click="dropdownOpen = ! dropdownOpen" class="mx-1 py-2 px-6 bg-opacity-25 text-gray-100  ">{{ Auth::user()->name }}</span>
+    <span  @click="dropdownOpen = ! dropdownOpen" class="mx-1 py-2 px-6 bg-opacity-25 text-gray-100  ">{{ Auth::user()->login }}</span>
     <div x-show="dropdownOpen"class="absolute right-6 mt-1 w-48 bg-white rounded-md overflow-hidden shadow-xl z-10" style="display: none;">
         <a href="{{route(('profile.edit'))}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Профиль</a>
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();" class="block px-4 py-2 text-sm text-red-800 hover:bg-indigo-600 hover:text-white" >

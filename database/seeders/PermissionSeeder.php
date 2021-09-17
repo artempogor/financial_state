@@ -4,6 +4,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
@@ -20,31 +21,18 @@ class PermissionSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
 
-        Permission::create(['name' => 'publish state']);
-        Permission::create(['name' => 'unpublish state']);
+        Permission::create(['name' => 'отправка отчётов']);
+        Permission::create(['name' => 'просмотр фин.отчётности']);
 
         $role1 = Role::create(['name' => 'admin']);
-        $role2 = Role::create(['name' => 'slave_user']);
-        $role2->givePermissionTo('publish state');
-        $role2->givePermissionTo('unpublish state');
-
-        $role3 = Role::create(['name' => 'master-user']);
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Example User',
-            'email' => 'test@example.com',
+        $role2 = Role::create(['name' => 'user']);
+        $role2->givePermissionTo('просмотр фин.отчётности');
+        $role2->givePermissionTo('отправка отчётов');
+        $user = \App\Models\User::create([
+            'login' => 'admin',
+            'ikul'=>'0',
+            'password'=>Hash::make("password"),
         ]);
         $user->assignRole($role1);
-
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Example Admin User',
-            'email' => 'admin@example.com',
-        ]);
-        $user->assignRole($role2);
-
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Example Super-Admin User',
-            'email' => 'superadmin@example.com',
-        ]);
-        $user->assignRole($role3);
     }
 }

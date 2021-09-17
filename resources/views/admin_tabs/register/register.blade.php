@@ -11,11 +11,48 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </head>
 <body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100">
     @include('layouts.navigation')
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
-        @include('admin_tabs.register.register_form')
+    <main class="container mx-auto px-10 py-12 bg-gray-100">
+        <x-guest-layout>
+            <div class="container mx-auto px-8 py-8">
+                <x-auth-validation-errors class="mb-4" :errors="$errors" />
+                <form method="POST" action="{{ route('register') }}">
+                    @if (session('status'))
+                        <div class="flex items-center bg-blue-500 text-white text-bg font-bold px-4 py-3" role="alert">
+                            <p>{{ session('status') }}</p>
+                        </div>
+                    @endif
+                    @csrf
+                    <div>
+                        <x-label for="login" class="text-left" :value="__('Логин')" />
+
+                        <x-input id="login" class="block mt-1 " type="text" name="login" :value="old('login')" required autofocus />
+                    </div>
+                    <!-- Email Address -->
+                    <div class="mt-4">
+                        <x-label for="ikul" class="text-left" :value="__('ИКЮЛ')" />
+
+                        <x-input id="ikul" class="block mt-1 " type="text" name="ikul" :value="old('ikul')"  />
+                    </div>
+                    <!-- Password -->
+                    <div class="mt-4">
+                        <x-label for="password" class="text-left" :value="__('Password')" />
+                        <x-input id="text" class="block mt-1 w-250"
+                                 type="text"
+                                 name="password"
+                                 value="{{Str::random(8)}}"
+                                 required autocomplete="new-password" />
+                    </div>
+                    <!-- Confirm Password -->
+                    <div class="mt-4 float-left">
+                        <x-button class="mt-4">
+                            {{ __('Зарегистрировать пользователя') }}
+                        </x-button>
+                    </div>
+                </form>
+            </div>
+        </x-guest-layout>
+
     </main>
-</div>
 </body>
 </html>

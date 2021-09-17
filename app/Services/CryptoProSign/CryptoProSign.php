@@ -9,6 +9,7 @@ use AdamBrett\ShellWrapper\Runners\Exec;
 use AdamBrett\ShellWrapper\Runners\Passthru;
 use AdamBrett\ShellWrapper\Runners\ShellExec;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -176,44 +177,52 @@ class CryptoProSign
         return $data;
     }
 
-    public function sign($filePath, $thumbprint, $pass = null)
+    public function sign(Request $request, $thumbprint, $pass = null)
     {
-        if (!$this->checkIsInstalled()) return false;
-        Log::info("filePath: " . $filePath);
-        if (!File::exists($filePath)) {
-            Log::error("Не найден файл для подписи: " . $filePath);
-            return false;
-        }
+        if ($request->isMethod('post') && $request->file('userfile')) {
 
-        $command = $this->cryptcpPath;
-        $command .= " -sign -detached -nochain -norev -thumbprint '$thumbprint' ";
-        $command .= " -file '" . $filePath . ".sig' " . "'" . $filePath . "'";
-        $command .= ' -fext sig';
+            $file = $request->file('userfile');
+            $upload_folder = '';
+            $filename = $file->getClientOriginalName(); // image.jpg
 
-        if ($pass) $command.= " -pin '" . $pass . "'";
+            $filePath = Storage::putFileAs($upload_folder, $file, $filename);
 
-
-        $command2 = $this->cryptcpPath;
-        $command2 .= " -sign -nochain -norev -thumbprint '$thumbprint' -detached ";
-        $command2 .= " --file '" . $filePath . ".sig' " . "'" . $filePath . "'";
-        $command2 .= ' -fext sig';
-
-        if ($pass) $command2.= " -pin '" . $pass . "'";
-        $return = shell_exec($command);
-
-        if(!str_contains($return, '[ErrorCode: 0x00000000]')) {
-            Log::error("Не удалось выполнить: " . $command);
-            Log::info("Полученный ответ: " . $return);
-
-            //@FIXME  2й вид команды
-            $return = shell_exec($command2);
-            if(!str_contains($return, '[ErrorCode: 0x00000000]')) {
-                Log::error("Не удалось выполнить: " . $command2);
-                Log::info("Полученный ответ: " . $return);
+            if (!$this->checkIsInstalled()) return false;
+            Log::info("filePath: " . $filePath);
+            if (!File::exists($filePath)) {
+                Log::error("Не найден файл для подписи: " . $filePath);
                 return false;
             }
-        }
 
+            $command = $this->cryptcpPath;
+            $command .= " -sign -detached -nochain -norev -thumbprint '$thumbprint' ";
+            $command .= " -file '" . $filePath . ".sig' " . "'" . $filePath . "'";
+            $command .= ' -fext sig';
+
+            if ($pass) $command .= " -pin '" . $pass . "'";
+
+
+            $command2 = $this->cryptcpPath;
+            $command2 .= " -sign -nochain -norev -thumbprint '$thumbprint' -detached ";
+            $command2 .= " --file '" . $filePath . ".sig' " . "'" . $filePath . "'";
+            $command2 .= ' -fext sig';
+
+            if ($pass) $command2 .= " -pin '" . $pass . "'";
+            $return = shell_exec($command);
+
+            if (!str_contains($return, '[ErrorCode: 0x00000000]')) {
+                Log::error("Не удалось выполнить: " . $command);
+                Log::info("Полученный ответ: " . $return);
+
+                //@FIXME  2й вид команды
+                $return = shell_exec($command2);
+                if (!str_contains($return, '[ErrorCode: 0x00000000]')) {
+                    Log::error("Не удалось выполнить: " . $command2);
+                    Log::info("Полученный ответ: " . $return);
+                    return false;
+                }
+            }
+        }
         return true;
     }
 

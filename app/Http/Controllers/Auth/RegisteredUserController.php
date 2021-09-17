@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+
+
+
+use Illuminate\Support\Facades\Storage;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -19,6 +24,20 @@ class RegisteredUserController extends Controller
      *
      * @return \Illuminate\View\View
      */
+    public function upload(Request $request)
+    {
+        // загрузка файла
+        if ($request->isMethod('post') && $request->file('userfile')) {
+
+            $file = $request->file('userfile');
+            $upload_folder = 'public/folder';
+            $filename = $file->getClientOriginalName(); // image.jpg
+
+            $a=Storage::putFileAs($upload_folder, $file, $filename);
+            dd($a);
+        }
+    }
+
     public function create()
     {
         return view('admin_tabs.register.register');
@@ -35,21 +54,23 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'login' => 'required|string|unique:users',
+            'ikul' =>'required|numeric|unique:users',
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'login' => $request->login,
+            'ikul'=>$request->ikul,
             'password' => Hash::make($request->password),
         ]);
-        $user->assignRole('master_user');
+        $user->assignRole('user');
 
         event(new Registered($user));
 
-
-        return redirect('register');
+        $statuslogin=$request->login;
+        $statuspassword = $request->password;
+        return redirect('register')->with('status', "Пользователь '$statuslogin' зарегистрирован, его пароль '$statuspassword'.");
     }
+
 }

@@ -12,12 +12,11 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
-<body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100">
 @include('layouts.navigation')
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+<body class="font-sans antialiased">
+    <main class="flex-1 overflow-x-hidden overflow-y-auto">
         @include('profile.profile_info')
     </main>
-</div>
+
 </body>
 </html>

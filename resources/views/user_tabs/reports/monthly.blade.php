@@ -38,6 +38,20 @@
                         </div>
 
                     </div>
+
+
+                <form method="post" enctype="multipart/form-data">
+                @csrf              <!-- с версии Laravel 5.6 -->
+                {{ csrf_field() }} <!-- до версии Laravel 5.5 -->
+
+                    <!-- поле для загрузки файла -->
+                    <input type="file" name="userfile">
+
+                    <input type="submit">
+                </form>
+                <div>
+
+                </div>
                 <div class="flex justify-left controls">
                     <button id="load" class="button button--primary button--blue">Load data</button>&nbsp;
                     <button id="save" class="button button--primary button--blue">Save data</button>
@@ -47,7 +61,6 @@
                     </label>
                 </div>
                 <pre id="example1console" class="flex justify-left console">Click "Load" to load data from server</pre>
-
             </div>
         </div>
     </main>

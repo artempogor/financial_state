@@ -17,9 +17,9 @@
 
             <!-- Email Address -->
             <div>
-                <x-label for="email" :value="__('Email')" />
+                <x-label for="login" :value="__('Логин')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input id="login" class="block mt-1 w-full" type="text" name="login" :value="old('login')" required autofocus />
             </div>
 
             <!-- Password -->
@@ -30,7 +30,6 @@
                                 type="password"
                                 name="password"
                                 required autocomplete="current-password" />
-                <label><input type="checkbox" class="password-checkbox"> Показать пароль</label>
             </div>
 
             <!-- Remember Me -->

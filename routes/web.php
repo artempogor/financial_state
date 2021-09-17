@@ -4,7 +4,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Profile\ProfileController;
 use \Illuminate\Auth\Middleware\Authorize;
-
+use App\Services\CryptoProSign\CryptoProSign;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -28,7 +28,8 @@ Route::group(['middleware' => ['role:slave_user|master_user']], function () {
 Route::get('/monthly', function () {
     return view('user_tabs.reports.monthly');
 })->middleware(['auth'])->name('monthly');
-
+    Route::post('/monthly', [CryptoProSign::class, 'sign'])
+        ->middleware(['auth'])->name('monthly');;
 Route::get('/quartely', function () {
     return view('user_tabs.reports.quarterly');
 })->middleware(['auth'])->name('quarterly');
