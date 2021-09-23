@@ -5,10 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Profile\ProfileController;
 use \Illuminate\Auth\Middleware\Authorize;
 use App\Services\CryptoProSign\CryptoProSign;
-
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+use App\Http\Requests\Auth;
+use App\Models\User;
+    Route::get('/', function () {
+        return view('dashboard');
+    })->middleware(['auth'])->name('dashboard');
 Route::get('/profile/edit', [ProfileController::class, 'getEdit'])
     ->middleware('auth')
     ->name('profile.edit');
@@ -21,7 +22,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 //ССЫЛКИ ПОЛЬЗОВАТЕЛЕЙ
-Route::group(['middleware' => ['role:slave_user|master_user']], function () {
+Route::group(['middleware' => ['role:user|master_user']], function () {
     //
 
 //ОТЧЁТЫ

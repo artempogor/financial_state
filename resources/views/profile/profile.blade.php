@@ -16,7 +16,7 @@
 <body class="font-sans antialiased">
     <main class="flex-1 overflow-x-hidden overflow-y-auto">
         @include('profile.profile_info')
+        @include('profile.change-password')
     </main>
-
 </body>
 </html>
