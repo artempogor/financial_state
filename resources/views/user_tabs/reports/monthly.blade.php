@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ 'БАЛАНС (ОТЧЕТ О ФИНАНСОВОМ СОСТОЯНИИ)'.Auth::user()->name}}</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
@@ -42,12 +42,6 @@
                                             class='hidden'
                                             data-name='{{Auth::user()->name}}'
                                     ></div>
-                                    <button id="export-file" class="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center">
-                                        <span class="mr-2">Загрузить</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                            <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-                                        </svg>
-                                    </button>
                                 </div>
                             </div>
                 <div>
@@ -65,7 +59,7 @@
             activeTab: 0,
             tabs: [
                 "Форма 0101",
-                "Форма 0102",
+                "Баланс",
             ]
         };
     }

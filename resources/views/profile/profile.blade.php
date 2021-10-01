@@ -14,7 +14,7 @@
 </head>
 @include('layouts.navigation')
 <body class="font-sans antialiased">
-    <main class="flex-1 overflow-x-hidden overflow-y-auto">
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
         @include('profile.profile_info')
         @include('profile.change-password')
     </main>

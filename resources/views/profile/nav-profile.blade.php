@@ -1,7 +1,8 @@
 
 <div>
-    <a class="flex items-center mt-2 py-2 px-5 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
 <div x-data="{ dropdownOpen: false }" class="relative">
+    <a class="flex items-center mt-2 py-2 px-5 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+
     <button @click="dropdownOpen = ! dropdownOpen"
             class="relative block h-9 w-9 rounded-full overflow-hidden shadow focus:outline-none">
         <svg class="h-8 w-8 text-blue-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -11,6 +12,7 @@
     <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-5"
          style="display: none;"></div>
     <span  @click="dropdownOpen = ! dropdownOpen" class="mx-1 py-2 px-6 bg-opacity-25 text-gray-100  ">{{ Auth::user()->login }}</span>
+    </a>
     <div x-show="dropdownOpen"class="absolute right-6 mt-1 w-48 bg-white rounded-md overflow-hidden shadow-xl z-10">
         <a href="{{route(('profile.edit'))}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Профиль</a>
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();"
@@ -22,5 +24,4 @@
     </div>
 </div>
     <span class="mx-14 py-5 px-6  bg-opacity-25 text-gray-500 ">{{ Auth::user()->getRoleNames()->first()}}</span>
-</a>
 </div>
