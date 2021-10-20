@@ -21,7 +21,10 @@
         <div class="m-3 md:grid grid-cols-1 grid-rows-1  bg-white gap-2 p-2 rounded">
             @include('user_tabs.reports.button_group')
             <div class="grid place-items h-150 text-gray-500 dark:text-gray-300 text-xl">
-                    <div x-data="tabs()">
+                <div class="overscroll-contain">
+                <pre id="console" class="console text-purple-700 text-opacity-100">После заполнения данных нажмите на кнопку "Загрузить"</pre>
+                </div>
+                <div x-data="tabs()">
                         <ul class="flex justify items-center my-4">
                             <template x-for="(tab, index) in tabs" :key="index">
                                 <li class="cursor-pointer py-2 px-4 text-gray-500 border-b-8"
@@ -30,12 +33,13 @@
                             </template>
                         </ul>
                             <div x-show="activeTab===0">
+
                                 <div class="shadow overflow-hidden rounded border-gray-800">
-                                    @include('user_tabs.reports.table')
                                 </div>
 
                             </div>
                             <div x-show="activeTab===1">
+
                                 <div id="example1" class="hot"></div>
                                 <div class="m-3 right-1">
                                     <div
@@ -56,7 +60,7 @@
 <script>
     function tabs() {
         return {
-            activeTab: 0,
+            activeTab: 1,
             tabs: [
                 "Форма 0101",
                 "Баланс",
