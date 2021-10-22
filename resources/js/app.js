@@ -1,11 +1,13 @@
 require('./bootstrap');
 require('alpinejs');
+require('./button/print');
+require('./button/save');
+require('./button/clear');
+require('./button/download');
 import Handsontable from 'handsontable';
 import 'handsontable/dist/handsontable.full.css';
-const container = document.querySelector('#example1');
+const container= document.querySelector('#example1');
 const infoConsole = document.querySelector('#console');
-const button_download = document.querySelector('#download');
-const button_save = document.querySelector('#verify');
 const hot = new Handsontable(container, {
     fixedColumnsLeft: 1,
     width: 'auto',
@@ -94,7 +96,10 @@ button_save.addEventListener('click', () => {
     postData('/api/export')
         .then(infoConsole.innerText = 'Данные отправленны')
 });
-
+button_clear.addEventListener('click', () => {
+    hot.clear();
+    infoConsole.innerText = 'Отчёт очищена'
+});
 async function postData(url = '') {
     const data_api = JSON.stringify(hot.getSourceData());
     const response = await fetch(url, {
@@ -139,36 +144,3 @@ function downloadAsFile(data,name) {
     a.download = "form_balance-"+dformat+"-"+name+".json";
     a.click();
 }
-document.getElementById('print').addEventListener('click', () => {
-    const iframe = document.createElement('iframe');
-    iframe.style.cssText = 'display: none';
-    document.body.appendChild(iframe);
-    const doc = iframe.contentDocument;
-    doc.open('text/html', 'replace');
-    doc.write(`<!doctype html><html><head>
-  <style>
-    @media print {
-      table {
-        border-collapse: collapse;
-      }
-      th, td {
-        border: 1px solid #ccc;
-        min-width: 50px;
-        padding: 2px 4px;
-      }
-      th {
-        background-color: #f0f0f0;
-        text-align: center;
-        font-weight: 400;
-        white-space: nowrap;
-        -webkit-print-color-adjust: exact;
-      }
-    }
-  </style>
-  </head><body>${hot.toHTML()}</body></html>`);
-    doc.close();
-    doc.defaultView.print();
-    setTimeout(() => {
-        iframe.parentElement.removeChild(iframe);
-    }, 10);
-});

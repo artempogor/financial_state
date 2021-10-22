@@ -7,6 +7,8 @@ use \Illuminate\Auth\Middleware\Authorize;
 use App\Services\CryptoProSign\CryptoProSign;
 use App\Http\Requests\Auth;
 use App\Models\User;
+use App\Http\Controllers\Reports\ReportCreateController;
+Route::post('/reports_create', [ReportCreateController::class,'create']);
     Route::get('/', function () {
         return view('dashboard');
     })->middleware(['auth'])->name('dashboard');

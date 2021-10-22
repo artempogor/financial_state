@@ -2,14 +2,12 @@
     <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform bg-gray-900 overflow-y-auto lg:translate-x-0 lg:static lg:inset-0">
         <div class="flex items-center justify-center mt-8">
             <div class="flex items-center">
-                <span class="text-white text-2xl mx-2 font-semibold">{{config('app.name')}}</span>
+                <a href="/" class="text-white text-2xl mx-2 font-semibold">{{config('app.name')}}</a>
             </div>
         </div>
-        <div>
         @include('profile.nav-profile')
-        </div>
-    <nav class="mt-20">
         @hasanyrole('user|master_user')
+        <nav class="mt-20">
         <div x-data="{ open: false }">
             <button @click="open = !open" class="w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-700 hover:text-gray-100 focus:outline-none">
                         <span class="flex items-center">
@@ -53,16 +51,16 @@
                 <a class="py-3 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" href="#">Сопроводительное письмо</a>
             </div>
         </div>
+        </nav>
         @endhasanyrole
         @hasrole('admin')
+        <nav class="mt-20">
         <div x-data="{ open: false }">
             <button @click="open = !open" class="w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-700 hover:text-gray-100 focus:outline-none">
                         <span class="flex items-center">
-  <svg class="h-8 w-8 text-white"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
-</svg>
-
-
+      <svg class="h-8 w-8 text-white"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
+      </svg>
             <span class="mx-3">Организации</span>
                         </span>
 
@@ -73,7 +71,6 @@
                             </svg>
                         </span>
             </button>
-
             <div x-show="!open" class="bg-gray-700">
                 <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" href=""{{route('dashboard')}}"">Обмен валют </a>
                 <a class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" href="#">Ломбард</a>
@@ -83,15 +80,15 @@
         </div>
         <a href="{{route('register')}}"  class="w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-700 hover:text-gray-100 focus:outline-none">
                         <span class="flex items-center">
-<svg class="h-8 w-8 text-white"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
-</svg>
+        <svg class="h-8 w-8 text-white"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+        </svg>
 
             <span class="mx-3">Регистрация пользователей</span>
                         </span>
 
         </a>
-
+        </nav>
         @endhasrole
-    </nav>
-</div>
+    </div>
+

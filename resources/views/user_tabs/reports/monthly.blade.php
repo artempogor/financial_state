@@ -39,7 +39,6 @@
 
                             </div>
                             <div x-show="activeTab===1">
-
                                 <div id="example1" class="hot"></div>
                                 <div class="m-3 right-1">
                                     <div
@@ -60,11 +59,9 @@
 <script>
     function tabs() {
         return {
-            activeTab: 1,
-            tabs: [
-                "Форма 0101",
-                "Баланс",
-            ]
+            activeTab: 0,
+            tabs: <?= json_encode($reports)?>,
+
         };
     }
 </script>

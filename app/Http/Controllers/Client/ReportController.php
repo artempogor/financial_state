@@ -11,7 +11,7 @@ class ReportController extends Controller
     {
 
         $data = '{"Activ": "III. Необоротные активы, удерживаемые для продажи, и группы выбытия","Kod_stroki": 1322,"Na_nachalo_otchetnogo_perioda": 123,"Na_konec_otchetnogo_perioda": ""}';
-
-        return response($request->getContent());
+        return response(json_decode($data,true));
+        //return response($request->getContent());
     }
 }
