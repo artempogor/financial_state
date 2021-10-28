@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\ReportController;
-
+use App\Http\Controllers\Reports\SaveReportController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,5 +18,7 @@ use App\Http\Controllers\Client\ReportController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/export',[ReportController::class,'export']);
-Route::get('/export',[ReportController::class,'export']);
+Route::post('/export_reports',[ReportController::class,'export']);
+Route::get('/export_reports',[ReportController::class,'export']);
+Route::post('/save_reports',[SaveReportController::class,'save']);
+Route::get('/save_reports',[SaveReportController::class,'save']);

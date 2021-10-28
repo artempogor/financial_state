@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <script>
-        window.globalVariables =  {a:'{{Auth::user()->login}}'}
+        window.globalVariables =  {a:'{{Auth::user()->ikul}}',b:'{{\Illuminate\Support\Carbon::today()->toDateString()}}'}
+
     </script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -33,19 +34,17 @@
                             </template>
                         </ul>
                             <div x-show="activeTab===0">
-
                                 <div class="shadow overflow-hidden rounded border-gray-800">
                                 </div>
-
                             </div>
                             <div x-show="activeTab===1">
                                 <div id="example1" class="hot"></div>
-                                <div class="m-3 right-1">
-                                    <div
-                                            class='hidden'
-                                            data-name='{{Auth::user()->name}}'
-                                    ></div>
-                                </div>
+{{--                                <div class="m-3 right-1">--}}
+{{--                                    <div--}}
+{{--                                            class='hidden'--}}
+{{--                                            data-name='{{Auth::user()->Ikul}}'--}}
+{{--                                    ></div>--}}
+{{--                                </div>--}}
                             </div>
                 <div>
                 </div>
