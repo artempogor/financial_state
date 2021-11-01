@@ -7,5 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
-    use HasFactory;
+ protected $table = 'reports';
+    protected $fillable = [
+        'ikul',
+        'name_report',
+        'data'
+    ];
+    protected $casts = [
+        'data' => 'array',
+    ];
+
 }

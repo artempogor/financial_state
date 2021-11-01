@@ -1,9 +1,9 @@
 <ul class="flex justify-left items-center my-5">
-    <button id="download" title="Сохранить">
+    <button id="download" title="Загрузить последний сохранённый отчет">
         <svg class="h-10 w-10 text-blue-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>
             <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />  <polyline points="7 11 12 16 17 11" />  <line x1="12" y1="4" x2="12" y2="16" /></svg>
     </button>
-    <button id="save" title="Сохранить">
+    <button id="save" title="Сохранить" onclick="submit()">
         <svg class="h-10 w-10 text-blue-500" width="24" height="24" viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
             <polyline points="17 21 17 13 7 13 7 21" />  <polyline points="7 3 7 8 15 8" /></svg>
     </button>

@@ -1,11 +1,15 @@
 require('./bootstrap');
-require('alpinejs');
+import Alpine from "alpinejs"
 import Handsontable from 'handsontable';
 import 'handsontable/dist/handsontable.full.css';
 import './button/print';
+
+window.Alpine = Alpine
+Alpine.start()
 const container = document.querySelector('#example1');
 const infoConsole = document.querySelector('#console');
-const button_download = document.querySelector('#download');
+const button_load = document.querySelector('#download');
+// const button_download = document.querySelector('#download');
 const button_save = document.querySelector('#save');
 const button_verify = document.querySelector('#verify');
 const button_clear = document.querySelector('#clear');
@@ -92,22 +96,26 @@ const hot = new Handsontable(container, {
     },
 });
 button_save.addEventListener('click', () => {
-    postData('/api/save_reports',{ answer: 42 })
-        .then(infoConsole.innerText = 'Данные отправленны')
+    postData('/api/save_reports')
+       // .then(infoConsole.innerText = 'Данные сохраненны')
 });
 button_verify.addEventListener('click', () => {
     postData('/api/export_reports',converToJson())
         .then(infoConsole.innerText = 'Данные отправленны')
 
 });
+
 button_clear.addEventListener('click', () => {
     hot.clear();
     infoConsole.innerText = 'Данные очищенны'
 });
-button_download.addEventListener('click', () => {
-    infoConsole.innerText = 'Файл загружен';
-    downloadAsFile(converToJson());
-})
+button_load.addEventListener('click', () => {
+    getData('/api/load_reports')
+});
+// button_download.addEventListener('click', () => {
+//     infoConsole.innerText = 'Файл загружен';
+//     downloadAsFile(converToJson());
+// })
 button_print.addEventListener('click', () => {
     const iframe = document.createElement('iframe');
     iframe.style.cssText = 'display: none';
@@ -143,8 +151,8 @@ button_print.addEventListener('click', () => {
 },)
 function converToJson()
 {
-    let name_user = window.globalVariables.a;
-    let data = hot.getSourceData().map(e => (delete e.name_column, e));
+    let name_user = window.globalVariables.ikul;
+    let data = hot.getSourceData();
     var info = {name : name_user,  color: "resd",};
     data.unshift(info);
     // let json = JSON.stringify(data,null,'\t');
@@ -160,21 +168,47 @@ function downloadAsFile(data) {
     a.download = "form_balance-"+dformat+" .json";
     a.click();
 }
-async function postData(url = '', data = {}) {
-    const data_api = JSON.stringify(hot.getSourceData());
-
+async function getData(url = '') {
     const response = await fetch(url, {
-            method: 'POST',
-            body:data_api, // body data type must match "Content-Type" header
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            referrerPolicy: 'no-referrer', // no-referrer, *client
+            method: 'GET',
         }
     );
-
     const responseText = await response.text();
-    const new_data = JSON.parse(responseText);
-    console.log(new_data);
+    const data = JSON.parse(responseText);
+    console.log(data);
+    hot.loadData(data);
+    if (response.ok) {
+
+        infoConsole.innerText = "Данные загруженны из БД ";
+    } else {
+        infoConsole.innerText = "Ошибка HTTP: " + response.status;
+    }
+}
+async function postData(url = '', data = {}) {
+    const data_api = hot.getSourceData();
+
+    const response = await fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *client
+        body: JSON.stringify({'data':data_api,'ikul':window.globalVariables.ikul,'name_report':window.globalVariables.name_report} )// body data type must match "Content-Type" header
+    }
+    );
+    console.log(response);
+    if (response.ok) {
+
+        infoConsole.innerText = "Данные сохранены в БД ";
+    } else {
+        infoConsole.innerText = "Ошибка HTTP: " + response.status;
+    }
+    // const responseText = await response.text();
+    // const new_data = JSON.parse(responseText)
+
 }

@@ -15,6 +15,9 @@ class CreateReportsTable extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
+            $table->string('ikul');
+            $table->string('name_report');
+            $table->json('data');
             $table->timestamps();
         });
     }
