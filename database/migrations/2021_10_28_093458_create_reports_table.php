@@ -17,7 +17,8 @@ class CreateReportsTable extends Migration
             $table->id();
             $table->string('ikul');
             $table->string('name_report');
-            $table->json('data');
+            $table->json('data1');
+            $table->json('data2');
             $table->timestamps();
         });
     }

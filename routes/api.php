@@ -21,4 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/export_reports',[ReportController::class,'export']);
 Route::get('/export_reports',[ReportController::class,'export']);
 Route::post('/save_reports',[ReportLocalController::class,'save']);
-Route::get('/load_reports',[ReportLocalController::class,'load']);
+Route::get('/load_reports/{ikul}/{name_report}',[ReportLocalController::class,'load']);

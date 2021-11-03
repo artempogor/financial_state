@@ -9,10 +9,9 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script>
-        window.globalVariables =  {ikul:'{{Auth::user()->ikul}}',time:'{{\Illuminate\Support\Carbon::today()->toDateString()}}',name_report:'{{json_encode($reports)}}'}
+        window.globalVariables =  {ikul:'{{Auth::user()->ikul}}',time:'{{\Illuminate\Support\Carbon::today()->toDateString()}}',name_report:'{{$reports[0]}}'}
     </script>
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </head>
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-gray-100">
@@ -25,7 +24,7 @@
                 <pre id="console" class="console text-purple-700 text-opacity-100">После заполнения данных нажмите на кнопку "Загрузить"</pre>
                 </div>
                 <div x-data="tabs()">
-                        <ul class="flex justify items-center my-4">
+                        <ul class="flex justify items-center m-4 my-4">
                             <template x-for="(tab, index) in tabs" :key="index">
                                 <li class="cursor-pointer py-2 px-4 text-gray-500 border-b-8"
                                     :class="activeTab===index ? 'text-gray-500 border-gray-800' : ''" @click="activeTab = index"
@@ -33,11 +32,11 @@
                             </template>
                         </ul>
                             <div x-show="activeTab===0">
-                                <div class="shadow overflow-hidden rounded border-gray-800">
-                                </div>
+                                <div id="report1" class="hot m-5"></div>
+                                <div id="report2" class="hot m-5"></div>
                             </div>
                             <div x-show="activeTab===1">
-                                <div id="example1" class="hot"></div>
+
                             </div>
                 <div>
                 </div>

@@ -2,25 +2,25 @@ require('./bootstrap');
 import Alpine from "alpinejs"
 import Handsontable from 'handsontable';
 import 'handsontable/dist/handsontable.full.css';
-import './button/print';
-
 window.Alpine = Alpine
 Alpine.start()
-const container = document.querySelector('#example1');
+const container1 = document.querySelector('#report1');
+const container2 = document.querySelector('#report2');
 const infoConsole = document.querySelector('#console');
 const button_load = document.querySelector('#download');
-// const button_download = document.querySelector('#download');
+const button_download = document.querySelector('#send');
 const button_save = document.querySelector('#save');
 const button_verify = document.querySelector('#verify');
 const button_clear = document.querySelector('#clear');
 const button_print = document.querySelector('#print');
-const hot = new Handsontable(container, {
+const hot1 = new Handsontable(container1, {
     autoRowSize: true,
+    colWidths: [500,10,400,400],
     licenseKey: 'non-commercial-and-evaluation',
     colHeaders:['<b>Актив</b>', '<b>Код строки</b>', '<b>На начало отчетного периода</b>', '<b>На конец отчётного периода</b>' ],
     data:
         [
-            {name_column:'Нематериальные активы (остаточная стоимость)', S:'1000', S1:'', S2:''},
+            {name_column:'I. Необоротные активы\n'+'Нематериальные активы (остаточная стоимость)\n', S:'1000', S1:'', S2:''},
             {name_column:'первоначальная стоимость', S:'1001', S1:'', S2:''},
             {name_column:'накопленая амортизация', S:'1002', S1:'', S2:''},
             {name_column:'Незавершенные капитальные инвестиции', S:'1005', S1:'', S2:''},
@@ -95,27 +95,105 @@ const hot = new Handsontable(container, {
         indicators: false
     },
 });
+const hot2 = new Handsontable(container2, {
+    autoRowSize: true,
+    colWidths: [500,10,400,400],
+    licenseKey: 'non-commercial-and-evaluation',
+    colHeaders:['<b>Пассив</b>', '<b>Код строки</b>', '<b>На начало отчетного периода</b>', '<b>На конец отчётного периода</b>' ],
+    data:
+        [
+            {name_column:'I. Собственный капитал\n' + 'Зарегистрированный (паевой) капитал\n', S:'1400', S1:'', S2:''},
+            {name_column:'Взносы в незарегистрированный уставный капитал', S:'1401', S1:'', S2:''},
+            {name_column:'Капитал в дооценках', S:'1405', S1:'', S2:''},
+            {name_column:'Дополнительный капитал', S:'1410', S1:'', S2:''},
+            {name_column:'эмиссионный доход', S:'1411', S1:'', S2:''},
+            {name_column:'накопленные курсовые разницы', S:'1412', S1:'', S2:''},
+            {name_column:'Резервный капитал', S:'1415', S1:'', S2:''},
+            {name_column:'Нераспределенная прибыль (непокрытый убыток)', S:'1420', S1:'', S2:''},
+            {name_column:'Неоплаченный капитал', S:'1425', S1:'', S2:''},
+            {name_column:'Изъятый капитал', S:'1430', S1:'', S2:''},
+            {name_column:'Прочие резервы', S:'1435', S1:'', S2:''},
+            {name_column:'Всего по разделу I', S:'1495', S1:'', S2:''},
+            {name_column:'II. Долгосрочные обязательства и обеспечения\n'+'Отсроченные налоговые обязательства\n', S:'1500', S1:'', S2:''},
+            {name_column:'Пенсионные обязательства', S:'1505', S1:'', S2:''},
+            {name_column:'Долгосрочные кредиты банков', S:'1510', S1:'', S2:''},
+            {name_column:'Прочие долгосрочные обязательства', S:'1515', S1:'', S2:''},
+            {name_column:'Долгосрочные обеспечения', S:'1520', S1:'', S2:''},
+            {name_column:'долгосрочные обеспечения затрат персонала', S:'1521', S1:'', S2:''},
+            {name_column:'Целевое финансирование', S:'1525', S1:'', S2:''},
+            {name_column:'благотворительная помощь', S:'1526', S1:'', S2:''},
+            {name_column:'Страховые резервы', S:'1530', S1:'', S2:''},
+            {name_column:'в том числе:\n'+'резерв долгосрочных обязательств \n', S:'1531', S1:'', S2:''},
+            {name_column:'резерв убытков или резерв необходимых выплат', S:'1532', S1:'', S2:''},
+            {name_column:'резерв незаработанных премий', S:'1533', S1:'', S2:''},
+            {name_column:'прочие страховые резервы ', S:'1534', S1:'', S2:''},
+            {name_column:'Инвестиционные контракты ', S:'1535', S1:'', S2:''},
+            {name_column:'Призовой фонд', S:'1540', S1:'', S2:''},
+            {name_column:'Резерв на выплату джек-пота', S:'1545', S1:'', S2:''},
+            {name_column:'Всего по разделу II', S:'1595', S1:'', S2:''},
+            {name_column:'IІІ. Текущие обязательства и обеспечения\n'+'Краткосрочные кредиты банков\n', S:'1600', S1:'', S2:''},
+            {name_column:'Векселя выданные', S:'1605', S1:'', S2:''},
+            {name_column:'Текущая кредиторская задолженность:\n'+'по долгосрочным обязательствам\n', S:'1610', S1:'', S2:''},
+            {name_column:'за товары, работы, услуги', S:'1615', S1:'', S2:''},
+            {name_column:'по расчетам с бюджетом', S:'1620', S1:'', S2:''},
+            {name_column:'в том числе из налога на прибыль', S:'1621', S1:'', S2:''},
+            {name_column:'по расчетам по страхованию', S:'1625', S1:'', S2:''},
+            {name_column:'по расчетам по оплате труда', S:'1630', S1:'', S2:''},
+            {name_column:'Текущая кредиторская задолженность по полученным авансам', S:'1635', S1:'', S2:''},
+            {name_column:'Текущая кредиторская задолженность по расчетам с участниками', S:'1640', S1:'', S2:''},
+            {name_column:'Текущая кредиторская задолженность по внутренним расчетам', S:'1645', S1:'', S2:''},
+            {name_column:'Текущая кредиторская задолженность по страховой деятельности ', S:'1650', S1:'', S2:''},
+            {name_column:'Текущие обеспечения', S:'1660', S1:'', S2:''},
+            {name_column:'Доходы будущих периодов', S:'1665', S1:'', S2:''},
+            {name_column:'Отсроченные комиссионные доходы от перестраховщиков', S:'1670', S1:'', S2:''},
+            {name_column:'Прочие текущие обязательства', S:'1690', S1:'', S2:''},
+            {name_column:'Всего по разделу IІІ', S:'1695', S1:'', S2:''},
+            {name_column:'ІV. Обязательства, связанные с необоротными активами, удерживаемыми для продажи, и группами выбытия', S:'1700', S1:'', S2:''},
+            {name_column:'V. Чистая стоимость активов негосударственного пенсионного фонда', S:'1800', S1:'', S2:''},
+            {name_column:'Баланс', S:'1900', S1:'', S2:''},
+        ],
+    columns: [
+        {
+            data: 'name_column',
+            readOnly: true
+        },
+        {
+            data: 'S',
+            readOnly: true
+        },
+        {
+            data: 'S1',
+            type: 'numeric'
+        },
+        {
+            data: 'S2',
+            type: 'numeric'
+        }
+    ],
+    hiddenColumns: {
+        columns: [1],
+        indicators: false
+    },
+});
 button_save.addEventListener('click', () => {
     postData('/api/save_reports')
-       // .then(infoConsole.innerText = 'Данные сохраненны')
 });
 button_verify.addEventListener('click', () => {
     postData('/api/export_reports',converToJson())
         .then(infoConsole.innerText = 'Данные отправленны')
-
 });
-
 button_clear.addEventListener('click', () => {
-    hot.clear();
+    hot1.clear();
+    hot2.clear();
     infoConsole.innerText = 'Данные очищенны'
 });
 button_load.addEventListener('click', () => {
     getData('/api/load_reports')
 });
-// button_download.addEventListener('click', () => {
-//     infoConsole.innerText = 'Файл загружен';
-//     downloadAsFile(converToJson());
-// })
+button_download.addEventListener('click', () => {
+    infoConsole.innerText = 'Файл загружен';
+    downloadAsFile(converToJson());
+})
 button_print.addEventListener('click', () => {
     const iframe = document.createElement('iframe');
     iframe.style.cssText = 'display: none';
@@ -142,7 +220,8 @@ button_print.addEventListener('click', () => {
       }
     }
   </style>
-  </head><body>${hot.toHTML()}</body></html>`);
+  </head><body>${hot1.toHTML()}
+  ${hot2.toHTML()}</body></html>`);
     doc.close();
     doc.defaultView.print();
     setTimeout(() => {
@@ -152,10 +231,12 @@ button_print.addEventListener('click', () => {
 function converToJson()
 {
     let name_user = window.globalVariables.ikul;
-    let data = hot.getSourceData();
-    var info = {name : name_user,  color: "resd",};
-    data.unshift(info);
-    // let json = JSON.stringify(data,null,'\t');
+    let name_report  = window.globalVariables.name_report;
+    let date = new Date();
+    let data1 = hot1.getSourceData();
+    let data2 = hot2.getSourceData();
+    var data = data2.concat(data1);
+     data.unshift({INN : name_user,  PERIOD: date.getFullYear(), FORM: name_report});
     let json = JSON.stringify(data,null,'\t');
     return(json);
 }
@@ -169,46 +250,42 @@ function downloadAsFile(data) {
     a.click();
 }
 async function getData(url = '') {
-    const response = await fetch(url, {
+    const $ikul = window.globalVariables.ikul;
+    const $name_report = window.globalVariables.name_report;
+    const response = await fetch(url+'/'+$ikul+'/'+$name_report, {
             method: 'GET',
         }
     );
-    const responseText = await response.text();
-    const data = JSON.parse(responseText);
-    console.log(data);
-    hot.loadData(data);
+    const responseText = await response.arrayBuffer();
+    console.log(responseText);
+    // const data = JSON.parse(responseText);
+    hot1.loadData(data);
+    hot2.loadData(data);
     if (response.ok) {
-
         infoConsole.innerText = "Данные загруженны из БД ";
     } else {
         infoConsole.innerText = "Ошибка HTTP: " + response.status;
     }
 }
 async function postData(url = '', data = {}) {
-    const data_api = hot.getSourceData();
-
+    const data_api1 = hot1.getSourceData();
+    const data_api2 = hot2.getSourceData();
     const response = await fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         redirect: 'follow', // manual, *follow, error
         referrerPolicy: 'no-referrer', // no-referrer, *client
-        body: JSON.stringify({'data':data_api,'ikul':window.globalVariables.ikul,'name_report':window.globalVariables.name_report} )// body data type must match "Content-Type" header
+        body: JSON.stringify({'data1':data_api1,'data2':data_api2,'ikul':window.globalVariables.ikul,'name_report':window.globalVariables.name_report} )// body data type must match "Content-Type" header
     }
     );
-    console.log(response);
     if (response.ok) {
-
         infoConsole.innerText = "Данные сохранены в БД ";
     } else {
         infoConsole.innerText = "Ошибка HTTP: " + response.status;
     }
-    // const responseText = await response.text();
-    // const new_data = JSON.parse(responseText)
-
 }

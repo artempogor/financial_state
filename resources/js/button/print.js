@@ -1,6 +1,5 @@
-const button_print = document.querySelector('#print');
-
-document.getElementById('print').addEventListener('click', () => {
+function print(data)
+{
     const iframe = document.createElement('iframe');
     iframe.style.cssText = 'display: none';
     document.body.appendChild(iframe);
@@ -26,10 +25,10 @@ document.getElementById('print').addEventListener('click', () => {
       }
     }
   </style>
-  </head><body>${hot.toHTML()}</body></html>`);
+  </head><body>${data}</body></html>`);
     doc.close();
     doc.defaultView.print();
     setTimeout(() => {
         iframe.parentElement.removeChild(iframe);
     }, 10);
-});
+}

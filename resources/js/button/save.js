@@ -1,23 +1,20 @@
-const button_save = document.querySelector('#verify');
-button_save.addEventListener('click', () => {
-    let json_api = JSON.stringify(hot.getSourceData(),null,'\t');
-    postData('/api/export')
-        .then(infoConsole.innerText = 'Данные отправленны')
-});
-async function postData(url = '') {
-    const data_api = JSON.stringify(hot.getSourceData());
-    const response = await fetch(url, {
+ function post(url = '',data) {
+    const response = fetch(url, {
             method: 'POST',
-            body:data_api, // body data type must match "Content-Type" header
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
             headers: {
-                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
+            redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify({'data':data,'ikul':window.globalVariables.ikul,'name_report':window.globalVariables.name_report} )// body data type must match "Content-Type" header
         }
     );
-    console.log(data_api);
-    const responseText = await response.text();
-    const data = JSON.parse(responseText);
-    hot.loadData(data);
+    if (response.ok) {
+        infoConsole.innerText = "Данные сохранены в БД ";
+    } else {
+        infoConsole.innerText = "Ошибка HTTP: " + response.status;
+    }
 }
