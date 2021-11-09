@@ -11,12 +11,10 @@ class Report extends Model
     protected $fillable = [
         'ikul',
         'name_report',
-        'data1',
-        'data2'
+        'data',
     ];
     protected $casts = [
-        'data1' => 'array',
-        'data2' => 'array',
+        'data' => 'array',
     ];
 
 }

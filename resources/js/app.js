@@ -14,8 +14,7 @@ const button_verify = document.querySelector('#verify');
 const button_clear = document.querySelector('#clear');
 const button_print = document.querySelector('#print');
 const hot1 = new Handsontable(container1, {
-    autoRowSize: true,
-    colWidths: [500,10,400,400],
+    colWidths: [500,200,300,300],
     licenseKey: 'non-commercial-and-evaluation',
     colHeaders:['<b>Актив</b>', '<b>Код строки</b>', '<b>На начало отчетного периода</b>', '<b>На конец отчётного периода</b>' ],
     data:
@@ -33,7 +32,7 @@ const hot1 = new Handsontable(container1, {
             {name_column:'Долгосрочные биологические активы (остаточная стоимость)', S:'1020', S1:'', S2:''},
             {name_column:'первоначальная стоимость долгосрочных биологических активов', S:'1021', S1:'', S2:''},
             {name_column:'накопленная амортизация долгосрочных биологических активов', S:'1022', S1:'', S2:''},
-            {name_column:'Долгосрочные финансовые инвестиции:\nучитываемые по методу участия в капитале других предприятий', S:'1030', S1:'', S2:''},
+            {name_column:'Долгосрочные финансовые инвестиции:\n учитываемые по методу участия в капитале других предприятий', S:'1030', S1:'', S2:''},
             {name_column:'Прочие финансовые инвестиции', S:'1035', S1:'', S2:''},
             {name_column:'Долгосрочная дебиторская задолженность', S:'1040', S1:'', S2:''},
             {name_column:'Отсроченные налоговые активы', S:'1045', S1:'', S2:''},
@@ -90,14 +89,9 @@ const hot1 = new Handsontable(container1, {
             type: 'numeric'
         }
     ],
-    hiddenColumns: {
-        columns: [1],
-        indicators: false
-    },
 });
 const hot2 = new Handsontable(container2, {
-    autoRowSize: true,
-    colWidths: [500,10,400,400],
+    colWidths: [500,200,300,300],
     licenseKey: 'non-commercial-and-evaluation',
     colHeaders:['<b>Пассив</b>', '<b>Код строки</b>', '<b>На начало отчетного периода</b>', '<b>На конец отчётного периода</b>' ],
     data:
@@ -152,39 +146,27 @@ const hot2 = new Handsontable(container2, {
             {name_column:'V. Чистая стоимость активов негосударственного пенсионного фонда', S:'1800', S1:'', S2:''},
             {name_column:'Баланс', S:'1900', S1:'', S2:''},
         ],
-    columns: [
-        {
-            data: 'name_column',
-            readOnly: true
-        },
-        {
-            data: 'S',
-            readOnly: true
-        },
-        {
-            data: 'S1',
-            type: 'numeric'
-        },
-        {
-            data: 'S2',
-            type: 'numeric'
-        }
+    columns: [{data: 'name_column', readOnly: true}, {data: 'S', readOnly: true}, {data: 'S1', type: 'numeric'}, {data: 'S2', type: 'numeric'}
     ],
-    hiddenColumns: {
-        columns: [1],
-        indicators: false
-    },
+
 });
 button_save.addEventListener('click', () => {
     postData('/api/save_reports')
 });
 button_verify.addEventListener('click', () => {
-    postData('/api/export_reports',converToJson())
+    verifiApi('/api/export_reports')
         .then(infoConsole.innerText = 'Данные отправленны')
 });
 button_clear.addEventListener('click', () => {
-    hot1.clear();
-    hot2.clear();
+    if (typeof hot2 != "undefined")
+    {
+        hot1.clear();
+        hot2.clear();
+    }
+    else
+    {
+        hot1.clear();
+    }
     infoConsole.innerText = 'Данные очищенны'
 });
 button_load.addEventListener('click', () => {
@@ -192,7 +174,7 @@ button_load.addEventListener('click', () => {
 });
 button_download.addEventListener('click', () => {
     infoConsole.innerText = 'Файл загружен';
-    downloadAsFile(converToJson());
+    downloadAsFile(convertToJson());
 })
 button_print.addEventListener('click', () => {
     const iframe = document.createElement('iframe');
@@ -220,23 +202,22 @@ button_print.addEventListener('click', () => {
       }
     }
   </style>
-  </head><body>${hot1.toHTML()}
-  ${hot2.toHTML()}</body></html>`);
+  </head><body><div>${hot1.toHTML()}${hot2.toHTML()}</div></body></html>`);
     doc.close();
     doc.defaultView.print();
     setTimeout(() => {
         iframe.parentElement.removeChild(iframe);
-    }, 10);
+    }, 20);
 },)
-function converToJson()
+function convertToJson()
 {
     let name_user = window.globalVariables.ikul;
     let name_report  = window.globalVariables.name_report;
     let date = new Date();
-    let data1 = hot1.getSourceData();
-    let data2 = hot2.getSourceData();
-    var data = data2.concat(data1);
-     data.unshift({INN : name_user,  PERIOD: date.getFullYear(), FORM: name_report});
+    var data = new Object();
+    data["info"] = [{INN : name_user,  PERIOD: date.getFullYear(), FORM: name_report}];
+    data["data1"]=hot1.getSourceData()
+    data["data2"]=hot2.getSourceData()
     let json = JSON.stringify(data,null,'\t');
     return(json);
 }
@@ -249,6 +230,36 @@ function downloadAsFile(data) {
     a.download = "form_balance-"+dformat+" .json";
     a.click();
 }
+async function verifiApi(url = ''){
+    const response = await fetch(url, {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *client
+            body: convertToJson()// body data type must match "Content-Type" header
+        }
+    );
+    const responseText = await response.text();
+    const data = JSON.parse(responseText);
+    if (typeof hot2 != "undefined") {
+        hot1.loadData(data.data1);
+        hot2.loadData(data.data2);
+    }
+    else
+    {
+        hot1.loadData(data.data1);
+    }
+    if (response.ok) {
+        infoConsole.innerText = "Данные провалидированны  ";
+    } else {
+        infoConsole.innerText = "Ошибка HTTP: " + response.status;
+    }
+}
 async function getData(url = '') {
     const $ikul = window.globalVariables.ikul;
     const $name_report = window.globalVariables.name_report;
@@ -256,20 +267,30 @@ async function getData(url = '') {
             method: 'GET',
         }
     );
-    const responseText = await response.arrayBuffer();
-    console.log(responseText);
-    // const data = JSON.parse(responseText);
-    hot1.loadData(data);
-    hot2.loadData(data);
+    const responseText = await response.text();
+    const data = JSON.parse(responseText);
+    if (typeof hot2 != "undefined") {
+        hot1.loadData(data[0].data1);
+        hot2.loadData(data[0].data2);
+    }
+    else
+    {
+        hot1.loadData(data[0].data1);
+    }
     if (response.ok) {
         infoConsole.innerText = "Данные загруженны из БД ";
     } else {
         infoConsole.innerText = "Ошибка HTTP: " + response.status;
     }
 }
-async function postData(url = '', data = {}) {
-    const data_api1 = hot1.getSourceData();
-    const data_api2 = hot2.getSourceData();
+async function postData(url = '') {
+    let name_user = window.globalVariables.ikul;
+    let name_report  = window.globalVariables.name_report;
+    let date = new Date();
+    var data = new Object();
+    data["info"] = [{INN : name_user,  PERIOD: date.getFullYear(), FORM: name_report}];
+    data["data1"]=hot1.getSourceData()
+    data["data2"]=hot2.getSourceData()
     const response = await fetch(url, {
         method: 'POST',
         mode: 'cors',
@@ -280,7 +301,7 @@ async function postData(url = '', data = {}) {
         },
         redirect: 'follow', // manual, *follow, error
         referrerPolicy: 'no-referrer', // no-referrer, *client
-        body: JSON.stringify({'data1':data_api1,'data2':data_api2,'ikul':window.globalVariables.ikul,'name_report':window.globalVariables.name_report} )// body data type must match "Content-Type" header
+        body: JSON.stringify(data)// body data type must match "Content-Type" header
     }
     );
     if (response.ok) {

@@ -33,7 +33,7 @@
                         </ul>
                             <div x-show="activeTab===0">
                                 <div id="report1" class="hot m-5"></div>
-                                <div id="report2" class="hot m-5"></div>
+                                <div id="report2" class="hot mt-10 m-5"></div>
                             </div>
                             <div x-show="activeTab===1">
 
