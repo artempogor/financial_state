@@ -1,4 +1,4 @@
-function print(data)
+export function print(data)
 {
     const iframe = document.createElement('iframe');
     iframe.style.cssText = 'display: none';

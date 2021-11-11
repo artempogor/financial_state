@@ -25,7 +25,7 @@
             </button>
 
             <div x-show="open" class="bg-gray-700">
-                <a href="{{route('monthly')}}" class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Месячные </a>
+                <a href="{{route('create_monthly')}}" class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Месячные </a>
                 <a href="{{route('quarterly')}}"  class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" href="#">Квартальные</a>
             </div>
         </div>

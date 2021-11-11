@@ -29,6 +29,7 @@ Route::group(['middleware' => ['role:user|master_user']], function () {
     //
 
 //ОТЧЁТЫ
+Route::get('/create_monthly',function (){return view('user_tabs.reports.create_monthly');})->name('create_monthly');
 Route::get('/monthly', function () {
     return view('user_tabs.reports.monthly');
 })->middleware(['auth'])->name('monthly');
