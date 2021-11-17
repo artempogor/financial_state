@@ -1,5 +1,5 @@
-
-export async function verify(data_api,url = '',infoConsole,){
+import {convertToJson} from "./convertJSON";
+export async function verify(hot1,hot2,url = '',infoConsole,){
     const response = await fetch(url, {
             method: 'POST',
             mode: 'cors',
@@ -10,7 +10,7 @@ export async function verify(data_api,url = '',infoConsole,){
             },
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer', // no-referrer, *client
-            body: data_api// body data type must match "Content-Type" header
+            body: convertToJson(hot1,hot2)// body data type must match "Content-Type" header
         }
     );
     const responseText = await response.text();

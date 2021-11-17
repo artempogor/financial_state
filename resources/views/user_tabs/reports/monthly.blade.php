@@ -4,10 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{$reports[0]}}</title>
+    <title>Финотчётность : {{$reports[0]}}</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script>
         window.globalVariables =  {ikul:'{{Auth::user()->ikul}}',time:'{{\Illuminate\Support\Carbon::today()->toDateString()}}',name_report:'{{$reports[0]}}'}
     </script>
@@ -21,15 +20,13 @@
             @include('user_tabs.reports.button_group')
             <div class="grid place-items h-150 text-gray-500 dark:text-gray-300 text-xl">
                 <div class="overscroll-contain">
-                <pre id="console" class="console text-purple-700 text-opacity-100">После заполнения данных нажмите на кнопку "Загрузить"</pre>
+                <pre id="console" class="console text-purple-700 text-opacity-100 ml-5 ">После заполнения данных нажмите на кнопку "Загрузить"</pre>
                 </div>
                 <div>
-
                     <div>
                         <div id="report1" class="hot m-5"></div>
-                        <div id="report2" class="hot mt-10 m-5"></div>
+                        <div id="report2" class="hot mt-5 m-5"></div>
                     </div>
-
                     <div>
                     </div>
                 </div>
