@@ -29,10 +29,16 @@ class PermissionSeeder extends Seeder
         $role2->givePermissionTo('просмотр фин.отчётности');
         $role2->givePermissionTo('отправка отчётов');
         $user = \App\Models\User::create([
-            'login' => 'admin',
+            'login' => 'user_test',
+            'ikul'=>'1234',
+            'password'=>Hash::make("password"),
+        ]);
+        $admin = \App\Models\User::create([
+            'login' => 'admin_test',
             'ikul'=>'0',
             'password'=>Hash::make("password"),
         ]);
-        $user->assignRole($role1);
+        $admin->assignRole($role1);
+        $user->assignRole($role2);
     }
 }
