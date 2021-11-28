@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
- protected $table = 'reports';
+    use HasFactory;
+    protected $table = 'reports';
     protected $fillable = [
         'ikul',
         'name_report',

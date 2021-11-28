@@ -65,9 +65,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
         $user->assignRole('user');
-
         event(new Registered($user));
-
         $statuslogin=$request->login;
         $statuspassword = $request->password;
         return redirect('register')->with('status', "Пользователь '$statuslogin' зарегистрирован, его пароль '$statuspassword'.");

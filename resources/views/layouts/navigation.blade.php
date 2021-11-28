@@ -1,8 +1,8 @@
-<div x-data="{ sidebarOpen: true }" class="flex h-screen bg-gray-200">
+ <div x-data="{ sidebarOpen: true }" class="flex h-screen bg-gray-200">
     <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform bg-gray-900 overflow-y-auto lg:translate-x-0 lg:static lg:inset-0">
         <div class="flex items-center justify-center mt-8">
             <div class="flex items-center">
-                <a href="/" class="text-white text-2xl mx-2 font-semibold">{{config('app.name')}}</a>
+                <a  class="text-white text-2xl mx-2 font-semibold">{{config('app.name')}}</a>
             </div>
         </div>
         @include('profile.nav-profile')
@@ -23,9 +23,8 @@
                             </svg>
                         </span>
             </button>
-
             <div x-show="open" class="bg-gray-700">
-                <a href="{{route('create_monthly')}}" class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Месячные </a>
+                <a href="{{route('create_monthly',['ikul'=>Auth::user()->ikul])}}" class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Месячные </a>
                 <a href="{{route('quarterly')}}"  class="py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" href="#">Квартальные</a>
             </div>
         </div>

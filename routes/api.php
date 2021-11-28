@@ -18,6 +18,10 @@ use App\Http\Controllers\Reports\ReportLocalController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/api_test',[ReportController::class,'reportsFromApi']);
+
+
+
 Route::post('/export_reports',[ReportController::class,'export']);
 Route::get('/export_reports',[ReportController::class,'export']);
 Route::post('/save_reports',[ReportLocalController::class,'save']);

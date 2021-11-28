@@ -19,10 +19,16 @@
                 </template>
             </ul>
             <div x-show="activeTab===0">
-                <p class="md:text-center text-2xl p-5">Отчёт о курсах и объемах операций по обмену валют в наличной форме</p>
-                @include('user_tabs.reports.table')
+                @include('user_tabs.reports.monthly.table_save')
             </div>
             <div x-show="activeTab===1">
+                <p class="md:text-center text-2xl p-5">Отчёт о курсах и объемах операций по обмену валют в наличной форме</p>
+                @include('user_tabs.reports.monthly.table_0001')
+            </div>
+            <div x-show="activeTab===2">
+                <p class="md:text-center text-2xl p-5">Отчёт о курсах и объемах операций по обмену валют в наличной форме</p>
+                @include('user_tabs.reports.monthly.table_0002')
+
             </div>
             <div>
             </div>
@@ -34,6 +40,7 @@
         return {
             activeTab: 0,
             tabs: [
+                "Cохраненные отчёты",
                 "Форма 0101",
                 "Форма 0102",
             ]

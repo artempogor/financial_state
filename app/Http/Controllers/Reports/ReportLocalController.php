@@ -5,12 +5,21 @@ Use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReportLocalController extends Controller
 {
+    public function show()
+    {
+        $ikul = Auth::user()->ikul;
+        $reports = Report::where('ikul',$ikul)
+        ->get();
+        return view('user_tabs.reports.monthly.create_monthly')->with(['reports'=>$reports]);
+    }
+
+
     public function save(Request $request)
     {
-
         $report = Report::updateOrCreate(
             ['ikul' => $request->input('info.0.INN'), 'name_report' => $request->input('info.0.FORM')],
             ['data' => Arr::except($request->input(),['info'])]

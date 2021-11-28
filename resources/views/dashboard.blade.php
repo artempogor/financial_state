@@ -16,7 +16,7 @@
 <div class="min-h-screen bg-gray-100">
     @include('layouts.navigation')
 @hasrole('user')
-@include('user_tabs.reports.dashboard_user')
+@include('user_tabs.reports.monthly.dashboard_user')
 @endhasrole
 </div>
 </body>
