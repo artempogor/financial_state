@@ -5,7 +5,6 @@ export async function postData(url = '',infoConsole,hotsarray) {
     var data = new Object();
     data["info"] = [{INN : name_user,  PERIOD: date.getFullYear(), FORM: name_report}];
     for (let i=0; i<hotsarray.length; i++) {
-        hotsarray[i].clear();
         data["data"+i]=hotsarray[i].getSourceData();
     }
     const response = await fetch(url, {

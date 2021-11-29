@@ -9,7 +9,6 @@ use App\Http\Requests\Auth;
 use App\Models\User;
 use App\Http\Controllers\Reports\SaveReportController;
 use App\Http\Controllers\Reports\ReportCreateController;
-Route::post('/reports_create', [ReportCreateController::class,'create']);
     Route::get('/', function () {
         return view('dashboard');
     })->middleware(['auth'])->name('dashboard');
@@ -29,12 +28,13 @@ Route::group(['middleware' => ['role:user|master_user']], function () {
     //
 
 //ОТЧЁТЫ
-Route::get('/create_monthly',function (){return view('user_tabs.reports.create_monthly');})->name('create_monthly');
+    Route::post('/reports_create', [ReportCreateController::class,'create']);
+    Route::get('/create_monthly',function (){return view('user_tabs.reports.create_monthly');})->name('create_monthly');
 Route::get('/monthly', function () {
     return view('user_tabs.reports.monthly');
 })->middleware(['auth'])->name('monthly');
-    Route::post('/monthly', [CryptoProSign::class, 'sign'])
-        ->middleware(['auth'])->name('monthly');;
+//    Route::post('/monthly', [CryptoProSign::class, 'sign'])
+//        ->middleware(['auth'])->name('monthly');;
 Route::get('/quartely', function () {
     return view('user_tabs.reports.quarterly');
 })->middleware(['auth'])->name('quarterly');

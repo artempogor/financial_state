@@ -7,21 +7,28 @@ export async function getData(url = '',infoConsole,hotsarray) {
     );
     const responseText = await response.text();
     const data = JSON.parse(responseText);
-    for (let i=1; i<hotsarray.length; i++) {
-        console.log(data[i]);
-        hotsarray[i].loadData(data[i].data[i]);
+    console.log(data);
+    for (var i=0; i<hotsarray.length; i++) {
+        hotsarray[i].loadData(data[0][`data${i}`]);
     }
-    // if (typeof hot2 != "undefined") {
-    //     hot1.loadData(data[0].data1);
-    //     hot2.loadData(data[0].data2);
+    // if (typeof hotsarray[1] != "undefined")
+    // {
+    //     console.log(typeof(data[0].data0));
+    //     console.log(data[0].data1);
+    //     hotsarray[0].loadData(data[0].data0);
+    //     hotsarray[1].loadData((data[0].data1));
     // }
     // else
     // {
-    //     hot1.loadData(data[0].data1);
+    //     hotsarray[0].loadData([data1].data);
     // }
-    if (response.ok) {
+
+    if (response.ok)
+    {
         infoConsole.innerText = "Данные загруженны из БД ";
-    } else {
+    }
+    else
+    {
         infoConsole.innerText = "Ошибка HTTP: " + response.status;
     }
 }

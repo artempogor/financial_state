@@ -12,6 +12,7 @@
 //та же функция, но ее попытался оптимизировать
 
 export function clearNew (hotsarray) {
+
     for (const hotInstances of hotsarray) {
         hotInstances.clear();
     }

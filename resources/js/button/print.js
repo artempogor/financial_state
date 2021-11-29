@@ -1,20 +1,19 @@
 
-export function print(hottarray)
+export function print(hotsarray)
 {
-    function print (hottarray){
-        for (let i=0; i<hotsarray.length; i++)
-        {
-            console.log(hotsarray[i]);
-            hotsarray[i].toHTML();
+    function print (hotsarray) {
+        const array=[];
+        for (var i = 0; i < hotsarray.length; i++) {
+            array.push(hotsarray[i].toHTML());
         }
-    const iframe = document.createElement('iframe');
-
-    iframe.style.cssText = 'display: none';
-    document.body.appendChild(iframe);
-    const doc = iframe.contentDocument;
-    doc.open('text/html', 'replace');
-    };
-    doc.write(`<!doctype html><html xmlns="http://www.w3.org/1999/html"><head>
+        return array;
+    }
+        const iframe = document.createElement('iframe');
+        iframe.style.cssText = 'display: none';
+        document.body.appendChild(iframe);
+        const doc = iframe.contentDocument;
+        doc.open('text/html', 'replace');
+        doc.write(`<!doctype html><html><head>
   <style>
     @media print {
       table {
@@ -34,10 +33,10 @@ export function print(hottarray)
       }
     }
   </style>
-  </head><body>${print}}</body></html>`);
-    doc.close();
-    doc.defaultView.print();
-    setTimeout(() => {
-        iframe.parentElement.removeChild(iframe);
-    }, 10);
+  </head><body>${print(hotsarray)[0]}${print(hotsarray)[1]}</body></html>`);
+        doc.close();
+        doc.defaultView.print();
+        setTimeout(() => {
+            iframe.parentElement.removeChild(iframe);
+        }, 1000);
 }

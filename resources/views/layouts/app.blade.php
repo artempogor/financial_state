@@ -34,7 +34,6 @@
                             </div>
                         </div>
                     </main>
-
                     @endhasrole
         </div>
     </body>
