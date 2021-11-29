@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\ReportController;
 use App\Http\Controllers\Reports\ReportLocalController;
+use App\Http\Controllers\Reports\ReportCreateController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,7 +19,7 @@ use App\Http\Controllers\Reports\ReportLocalController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/api_test',[ReportController::class,'reportsFromApi']);
+Route::get('/api_test',[ReportCreateController::class,'create']);
 
 
 
